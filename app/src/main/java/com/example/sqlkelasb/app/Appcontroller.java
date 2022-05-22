@@ -1,85 +1,48 @@
 package com.example.sqlkelasb.app;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.app.Application;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import android.text.TextUtils;
 
-public class Appcontroller extends SQLiteOpenHelper {
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 
+public class Appcontroller extends Application {
 
-    public Appcontroller(Context context) {
-        super(context, "ProdiTI", null, 1);
-    }
+    public static final String TAG = Appcontroller.class.getSimpleName();
 
+    private RequestQueue mRequestQueue;
+    private static Appcontroller mInstance;
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE teman (id integer primary key, nama text, telpon text)");
+    public void onCreate() {
+        super.onCreate();
+        mInstance = this;
     }
 
+    public static synchronized Appcontroller getInstance(){return mInstance;}
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-
-
-        db.execSQL("DROP TABLE if exists teman");
-
-        onCreate(db);
-    }
-
-
-    public void  insertData(HashMap<String,String> queryValues){
-
-
-        SQLiteDatabase basisdata = this.getWritableDatabase();
-
-        ContentValues nilai = new ContentValues();
-        nilai.put("nama",queryValues.get("nama"));
-        nilai.put("telpon", queryValues.get("telpon"));
-
-        basisdata.insert("teman",null,nilai);
-        basisdata.close();
-    }
-
-    public ArrayList<HashMap<String,String>> getAllTeman(){
-        ArrayList<HashMap<String,String>> daftarTeman;
-        daftarTeman = new ArrayList<HashMap<String,String>>();
-
-        String selectQuery = " SELECT * FROM teman";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery,null);
-
-        if(cursor.moveToFirst())
-        {
-            do {
-                HashMap<String,String> map = new  HashMap<>();
-                map.put("id", cursor.getString(0));
-                map.put("nama", cursor.getString(1));
-                map.put("telpon", cursor.getString(2));
-                daftarTeman.add(map);
-            }
-            while (cursor.moveToNext());
+    public RequestQueue getRequestQueue(){
+        if (mRequestQueue == null){
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        db.close();
-        return daftarTeman;
+        return mRequestQueue;
     }
-    public void UpdateData(HashMap<String,String> queryValues){
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues nilai = new ContentValues();
-        nilai.put("nama",queryValues.get("nama"));
-        nilai.put("nama",queryValues.get("nama"));
-        nilai.put("telpon",queryValues.get("telpon"));
-        db.update("teman",nilai,"id=?",new String[]{queryValues.get("id")});
-        db.close();
+
+    public <T> void addToRequestQueue(Request<T> req, String tag){
+        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
+        getRequestQueue().add(req);
     }
-    public void DeleteData(HashMap<String,String> queryValues){
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete("teman","id=?",new String[]{queryValues.get("id")});
-        db.close();
+
+    public <T> void addToRequestQueue(Request<T> req){
+        req.setTag(TAG);
+        getRequestQueue().add(req);
+    }
+
+    public void cancelPendingRequest(Object tag){
+        if (mRequestQueue != null){
+            mRequestQueue.cancelAll(tag);
+        }
     }
 }

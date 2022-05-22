@@ -33,7 +33,6 @@ public class TemanBaru extends AppCompatActivity {
     private Button simpanBtn;
     String nm,tlp;
     int succes;
-    Appcontroller controller = new Appcontroller(this);
 
 
     private static String url_insert = "http://10.0.2.2:80/PAM/insert.php";
@@ -67,7 +66,6 @@ public class TemanBaru extends AppCompatActivity {
                     qvalues.put("nama", nm);
                     qvalues.put("telpon", tlp);
 
-                    controller.insertData(qvalues);
                     callHome();
                 }
             }

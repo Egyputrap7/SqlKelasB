@@ -3,11 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/layout/activity_edit_teman.xml" value="0.13148148148148148" />
-        <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/layout/activity_edit_teman.xml" value="0.264" />
+        <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/layout/activity_teman_baru.xml" value="0.13148148148148148" />
-        <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/layout/row_data_teman.xml" value="0.1" />
-        <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/menu/menuedit.xml" value="0.1" />
+        <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/layout/row_data_teman.xml" value="0.152" />
+        <entry key="..\:/EGY/SM4/PAM/SqlKelasB/app/src/main/res/menu/menuedit.xml" value="0.6" />
       </map>
     </option>
   </component>

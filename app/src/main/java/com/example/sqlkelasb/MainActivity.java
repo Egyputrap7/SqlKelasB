@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static String url_select = "http://10.0.2.2:80/PAM/viewData.php";
+    private static String url_select = "https://20200140090.praktikumtiumy.com/viewData.php";
     public static final String TAG_ID = "id";
     public static final String TAG_NAMA = "nama";
     public static final String TAG_TELPON = "telpon";
@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 Log.d(TAG, response.toString());
 
-                //Parsing json
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject obj = response.getJSONObject(i);
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                         item.setNama(obj.getString(TAG_NAMA));
                         item.setTelpon(obj.getString(TAG_TELPON));
 
-                        //menambah item ke array
                         temanArrayList.add(item);
                     } catch (JSONException e) {
                         e.printStackTrace();

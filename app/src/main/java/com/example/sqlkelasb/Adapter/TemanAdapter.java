@@ -38,6 +38,7 @@ import java.util.Map;
 
 public class TemanAdapter extends RecyclerView.Adapter<TemanAdapter.TemanViewHolder> {
 
+
     private ArrayList<Teman> listData;
 
     public TemanAdapter(ArrayList<Teman> listData) {
@@ -45,7 +46,7 @@ public class TemanAdapter extends RecyclerView.Adapter<TemanAdapter.TemanViewHol
     }
 
     @Override
-    public TemanViewHolder onCreateViewHolder( @NonNull  ViewGroup parent, int viewType) {
+    public TemanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInf = LayoutInflater.from(parent.getContext());
         View view = layoutInf.inflate(R.layout.row_data_teman,parent,false);
         return new TemanViewHolder(view);
@@ -85,14 +86,14 @@ public class TemanAdapter extends RecyclerView.Adapter<TemanAdapter.TemanViewHol
                                 break;
                             case R.id.mnHapus:
                                 AlertDialog.Builder alertdb = new AlertDialog.Builder(view.getContext());
-                                alertdb.setTitle("Yakin"+nm+ "akan di hapus");
+                                alertdb.setTitle("Yakin  "+nm+ "akan di hapus");
                                 alertdb.setMessage("Tekan Ya untuk menghapus");
                                 alertdb.setCancelable(false);
                                 alertdb.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         HapusData(id);
-                                        Toast.makeText(view.getContext(),"Data "+id+"Telah di hapus", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(view.getContext(),"Data "+id+" Telah di hapus", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(view.getContext(),MainActivity.class);
                                         view.getContext().startActivity(intent);
                                     }
@@ -104,7 +105,7 @@ public class TemanAdapter extends RecyclerView.Adapter<TemanAdapter.TemanViewHol
                                     }
                                 });
                                 AlertDialog adlg = alertdb.create();
-                                        adlg.show();
+                                adlg.show();
                                 break;
                         }
                         return true;
@@ -117,7 +118,7 @@ public class TemanAdapter extends RecyclerView.Adapter<TemanAdapter.TemanViewHol
     }
 
     public void HapusData(final String idx){
-        String url_update = "http://10.0.2.2:80/PAM/deletedata.php";
+        String url_update = "https://20200140090.praktikumtiumy.com/deletedata.php";
         final String TAG = MainActivity.class.getSimpleName();
         final String TAG_SUCCES = "succes";
         final int[] sukses = new int[1];

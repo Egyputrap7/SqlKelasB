@@ -8,4 +8,8 @@
     <string name="tnotelp">No Telepon</string>
     <string name="tcreatedata">Create Data</string>
     <string name="tview">View</string>
+    <string name="txId">Text ID</string>
+    <string name="txnotlp">No Telepon</string>
+    <string name="txnama">Nama</string>
+    <string name="edit">Update</string>
 </resources>

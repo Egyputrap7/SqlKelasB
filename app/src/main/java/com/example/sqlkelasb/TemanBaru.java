@@ -16,8 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.sqlkelasb.app.Appcontroller;
-import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,73 +25,57 @@ import java.util.Map;
 
 public class TemanBaru extends AppCompatActivity {
 
-
-
-    private TextInputEditText tNama, tTelpon;
+    private EditText editNama, editTelpon;
     private Button simpanBtn;
     String nm,tlp;
-    int succes;
+    int success;
 
-
-    private static String url_insert = "http://10.0.2.2:80/PAM/insert.php";
+    private static String url_insert = "https://20200140090.praktikumtiumy.com/insert.php";
     private static final String TAG = TemanBaru.class.getSimpleName();
-    private static final String TAG_SUCCES ="succes";
-
+    private static final String TAG_SUCCES = "success";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teman_baru);
 
-        tNama = (TextInputEditText) findViewById(R.id.tietNama);
-        tTelpon = (TextInputEditText)  findViewById(R.id.tietTelepon);
-        simpanBtn = (Button)  findViewById(R.id.buttonSave);
+        editNama = findViewById(R.id.tietNama);
+        editTelpon = findViewById(R.id.tietTelepon);
+        simpanBtn = findViewById(R.id.savebuton);
 
         simpanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(TemanBaru.this, MainActivity.class);
+                startActivity(intent);
                 SimpanData();
-                if(tNama.getText().toString().isEmpty() || tTelpon.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Data Belum komplit !", Toast.LENGTH_SHORT).show();
-
-                }
-                else{
-                    nm = tNama.getText().toString();
-                    tlp = tTelpon.getText().toString();
-
-                    HashMap<String,String> qvalues = new HashMap<>();
-                    qvalues.put("nama", nm);
-                    qvalues.put("telpon", tlp);
-
-                    callHome();
-                }
             }
         });
     }
 
     public void SimpanData(){
-        if (tNama.getText().toString().equals("") || tTelpon.getText().toString().equals("")) {
-            Toast.makeText(TemanBaru.this,"Semua Harus Ter isi!!",Toast.LENGTH_SHORT).show();
+        if(editNama.getText().toString().equals("") || editTelpon.getText().toString().equals("")){
+            Toast.makeText(TemanBaru.this, "Semua Harus diisi DATA!!!", Toast.LENGTH_SHORT).show();
         }
         else {
-            nm = tNama.getText().toString();
-            tlp = tTelpon.getText().toString();
+            nm = editNama.getText().toString();
+            tlp= editTelpon.getText().toString();
 
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
             StringRequest strReq = new StringRequest(Request.Method.POST, url_insert, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.d(TAG, "Response: " + response.toString());
+                    Log.d(TAG, "Response : " + response.toString());
 
                     try {
-                        JSONObject Jobj = new JSONObject(response);
-                        succes = Jobj.getInt(TAG_SUCCES);
-                        if (succes == 1) {
-                            Toast.makeText(TemanBaru.this, "Sukses SImpan Data", Toast.LENGTH_SHORT).show();
+                        JSONObject jobj = new JSONObject(response);
+
+                        success = jobj.getInt(TAG_SUCCES);
+                        if (success == 1) {
+                            Toast.makeText(TemanBaru.this, "Sukses simpan data", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TemanBaru.this, "gagal", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TemanBaru.this, "GAGAL", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -102,8 +84,9 @@ public class TemanBaru extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG,"Error : "+ error.getMessage());
-                    Toast.makeText(TemanBaru.this,"gagal Simpann Data",Toast.LENGTH_SHORT).show();
+                    Log.e(TAG,"Error : " + error.getMessage());
+
+                    Toast.makeText(TemanBaru.this, "Gagal Simpan DATA!!!", Toast.LENGTH_SHORT).show();
                 }
             }){
                 @Override
@@ -113,16 +96,11 @@ public class TemanBaru extends AppCompatActivity {
                     params.put("nama",nm);
                     params.put("telpon",tlp);
 
+
                     return params;
                 }
             };
             requestQueue.add(strReq);
         }
-    }
-
-    public  void  callHome(){
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }
